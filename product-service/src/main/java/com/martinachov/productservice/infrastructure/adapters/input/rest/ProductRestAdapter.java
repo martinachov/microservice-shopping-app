@@ -32,8 +32,6 @@ public class ProductRestAdapter {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createProduct(@RequestBody ProductRequest productRequest) {
-        System.out.println("Recibiendo request para crear producto: " + productRequest);
-
         // Request to domain
         Product productToCreate = productMapper.map(productRequest, Product.class);
         createProductUseCase.createProduct(productToCreate);

@@ -11,8 +11,10 @@ import com.martinachov.productservice.infrastructure.adapters.output.persistence
 import com.martinachov.productservice.infrastructure.adapters.output.persistence.repository.ProductRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
+@Slf4j
 public class ProductPersistenceAdapter implements ProductOutputPort{
 
     private final ProductRepository productRepository;
@@ -20,19 +22,18 @@ public class ProductPersistenceAdapter implements ProductOutputPort{
 
     @Override
     public void saveProduct(Product product) {
-        System.out.println("Guardando producto en BD: " + product);
+        log.info("Guardando producto: {} ..." , product.getDescription());
         ProductEntity productEntity = productMapper.map(product, ProductEntity.class);
         productRepository.save(productEntity);
     }
 
     @Override
     public List<Product> getAllProducts() {
-        System.out.println("Retornando todos los productos de la BD");
+        log.info("Retornando todos los productos de la BD");
         List<ProductEntity> response = productRepository.findAll();
         return response.stream()
                         .map(productEntity -> productMapper.map(productEntity, Product.class))
                         .collect(Collectors.toList());
-
     }
     
 }
