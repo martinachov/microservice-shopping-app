@@ -24,9 +24,9 @@ import lombok.RequiredArgsConstructor;
 public class OrderService {
 
     private final OrderRepository orderRepository;
-    private final WebClient.Builder webClientBulder;
+    private final WebClient.Builder webClientBuilder;
 
-    public void placeOrder(OrderRequest orderRequest) {
+    public String placeOrder(OrderRequest orderRequest) {
         Order order = new Order();
         order.setOrderNumber(UUID.randomUUID().toString());
 
@@ -42,7 +42,7 @@ public class OrderService {
                 .collect(Collectors.toList());
 
         //Call Inventory Service, and place order if product is in stock
-        InventoryResponse[] inventoryResponses = webClientBulder.build().get()
+        InventoryResponse[] inventoryResponses = webClientBuilder.build().get()
                                     .uri("http://inventory-service/api/inventory/", uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
                                     .retrieve()
                                     .bodyToMono(InventoryResponse[].class)
@@ -50,6 +50,7 @@ public class OrderService {
 
         if(allProductsInStock(inventoryResponses)){
             orderRepository.save(order);
+            return "Order Placed Successfully";
         } else {
             throw new IllegalArgumentException("Product is not in stock!");
         }
