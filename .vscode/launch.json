@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch NotificationServiceApplication",
+            "request": "launch",
+            "mainClass": "com.martinachov.notificationservice.NotificationServiceApplication",
+            "projectName": "notification-service"
+        },
+        {
+            "type": "java",
             "name": "Launch ApiGatewayApplication",
             "request": "launch",
             "mainClass": "com.martinachov.apigateway.ApiGatewayApplication",
