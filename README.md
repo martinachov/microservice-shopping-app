@@ -1,6 +1,6 @@
 # Microservice Online Shopping Application
 
-## We are going to implement 4 Services.
+## Services:
 
   1. Product Service
   2. Order Service
